@@ -197,19 +197,14 @@ make_notification(Notification, Options) ->
 
     MessageCount = binary_to_integer(maps:get(<<"message-count">>, Notification)),
 
-    DataOrAlert = case Options of
-                      #{<<"silent">> := <<"true">>} ->
-                          Data = Notification#{<<"message-count">> := MessageCount},
-                          #{data => Data};
-                      _ ->
-                          BasicAlert = #{body => maps:get(<<"last-message-body">>, Notification),
-                                         title => maps:get(<<"last-message-sender">>, Notification),
-                                         tag => maps:get(<<"last-message-sender">>, Notification),
-                                         badge => MessageCount},
-                          OptionalAlert = maps:with([<<"click_action">>, <<"sound">>], Options),
-                          #{alert => maps:merge(BasicAlert, OptionalAlert)}
-                  end,
-    {ok, maps:merge(NotificationParams, DataOrAlert)}.
+    BasicAlert = #{body => maps:get(<<"last-message-body">>, Notification),
+        title => maps:get(<<"last-message-sender">>, Notification),
+        tag => maps:get(<<"last-message-sender">>, Notification),
+        badge => MessageCount},
+    OptionalAlert = maps:with([<<"click_action">>, <<"sound">>], Options),
+    FinalPayload = #{data => maps:merge(BasicAlert, OptionalAlert)},
+
+    {ok, maps:merge(NotificationParams, FinalPayload)}.
 
 -spec call(Host :: jid:server(), M :: atom(), F :: atom(), A :: [any()]) -> any().
 call(Host, M, F, A) ->
