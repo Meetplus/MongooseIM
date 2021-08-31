@@ -125,7 +125,7 @@
  {<<"ranch">>,{pkg,<<"ranch">>,<<"1.8.0">>},1},
  {<<"re2">>,
   {git,"https://github.com/dukesoferl/re2.git",
-       {ref,"9d66dff878f229d7f2a33019022f590dede9fef1"}},
+       {ref,"f397220458c2c3b821c0db0d95d093ccfac4ec76"}},
   1},
  {<<"recon">>,{pkg,<<"recon">>,<<"2.5.1">>},0},
  {<<"redbug">>,{pkg,<<"redbug">>,<<"1.2.1">>},1},
